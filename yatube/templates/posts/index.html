@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    {% include 'includes/paginator.html' %}
+    {% load cache %}
+    {% cache 20 index_page %}
+      {% for post in page_obj %}
+        {% include 'includes/post_block.html' with show_author=True show_group=True %}
+        {% if not forloop.last %}<hr>{% endif %}
+      {% endfor %}
+    {% endcache %} 
+    {% include 'includes/paginator.html' %}
+{% endblock %}
